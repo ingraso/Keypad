@@ -5,6 +5,7 @@ def signal_is_digit(signal):
     """Return if signal is digit 0-9"""
     return 48 <= ord(signal) <= 57
 
+# test
 
 class FSM:
     """Class for the finite state machine."""
