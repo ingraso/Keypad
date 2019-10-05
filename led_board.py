@@ -29,6 +29,8 @@ class LedBoard:
         """ set the proper mode """
         gpio.setmode(gpio.BCM)
 
+        # have to setup the input and output pins!!
+
     def light_led(self, led, sec):
         """ turn on one LED by making the
             appropriate combination of input
