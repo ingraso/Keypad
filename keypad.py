@@ -3,6 +3,19 @@ from time import sleep
 import RPi.GPIO as GPIO
 
 
+def setup():
+    """This method will set the proper mode via GPIO.setmode(GPIO.BCM).
+    It will also set the row-pins as output and the column-pins as input."""
+    GPIO.setmode(GPIO.BCM)
+    GPIO.setup(18, GPIO.OUT)
+    GPIO.setup(23, GPIO.OUT)
+    GPIO.setup(24, GPIO.OUT)
+    GPIO.setup(25, GPIO.OUT)
+    GPIO.setup(17, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+    GPIO.setup(27, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+    GPIO.setup(22, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+
+
 class KeyPad:
     """This class is representing the keypad, but I am currently
      not sure what happens here"""
@@ -10,25 +23,12 @@ class KeyPad:
     def __init__(self):
         """This class initializes the KeyPad-object,
         so the setup-method must be called"""
-        self.setup()
+        setup()
         # A dict that uses a tupple with (row, col) as key
         self.signs = {(18, 17): '1', (18, 27): '2', (18, 22): '3',
                       (23, 17): '4', (23, 27): '5', (23, 22): '6',
                       (24, 17): '7', (24, 27): '8', (24, 22): '9',
                       (25, 17): '*', (25, 27): '0', (25, 22): '#'}
-
-
-    def setup(self):
-        """This method will set the proper mode via GPIO.setmode(GPIO.BCM).
-        It will also set the row-pins as output and the column-pins as input."""
-        GPIO.setmode(GPIO.BCM)
-        GPIO.setup(18, GPIO.OUT)
-        GPIO.setup(23, GPIO.OUT)
-        GPIO.setup(24, GPIO.OUT)
-        GPIO.setup(25, GPIO.OUT)
-        GPIO.setup(17, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-        GPIO.setup(27, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-        GPIO.setup(22, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 
     def do_polling(self):
         """Will use nested loops to determine which key is currently being pressed.
@@ -55,4 +55,7 @@ class KeyPad:
     def get_next_signal(self):
         """The interface between the agent and the keypad.
         Calls do_polling until a key press is detected."""
-        self.do_polling()
+        next_signal = self.do_polling()
+        while next_signal is None:
+            next_signal = self.do_polling()
+        return next_signal
