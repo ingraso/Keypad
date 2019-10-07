@@ -8,6 +8,7 @@ def setup():
     It will also set the row-pins as output and the column-pins as input."""
     GPIO.setmode(GPIO.BCM)
     GPIO.setup(18, GPIO.OUT)
+    print("now we have set pin 18 to OUT")
     GPIO.setup(23, GPIO.OUT)
     GPIO.setup(24, GPIO.OUT)
     GPIO.setup(25, GPIO.OUT)
@@ -35,16 +36,21 @@ class KeyPad:
         We will check if a key is pressed 10 times with 10ms sleep-time."""
         row_pins = [18, 23, 24, 25]
         col_pins = [17, 27, 22]
+
         for row in row_pins:
             # Set the current row_pin HIGH
             GPIO.output(row, GPIO.HIGH)
+            print("the row is: ", row)
             for col in col_pins:
                 # If both col and row is high (10 times), save the values in a
                 # tupple that will also be stored in a dict
+                print("the col is: ", col)
                 i = 0
                 for j in range(0, 10):
                     if GPIO.input(col) == GPIO.HIGH:
                         i += 1
+                    print("i er: ", i)
+                    print("Nå kommer sleep:")
                     sleep(0.01)
                 if i == 10:
                     tupple_answer = (row, col)
@@ -55,6 +61,7 @@ class KeyPad:
     def get_next_signal(self):
         """The interface between the agent and the keypad.
         Calls do_polling until a key press is detected."""
+        print("now we are in keypad.get_next_signal")
         next_signal = self.do_polling()
         while next_signal is None:
             next_signal = self.do_polling()

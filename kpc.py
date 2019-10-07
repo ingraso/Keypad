@@ -10,7 +10,9 @@ class KPC:
     def __init__(self):
         """Initializing the KPC-object"""
         self.keypad = kp.KeyPad()
+        print("Keypad is initialized")
         self.LED_board = lb.LedBoard()
+        print("LED_board initialized")
         self.current_password_sequence = ''
         self.current_new_password = ''
         self.current_new_lid = ''
@@ -34,6 +36,7 @@ class KPC:
 
     def get_next_signal(self, symbol):
         """Returns the next signal"""
+        print("Now were in kpc.get_next_signal")
         if self.override_signal is not None:
             sending_signal = self.override_signal
             self.override_signal = None
@@ -112,7 +115,7 @@ class KPC:
         """Start the power_down light sequence"""
         self.LED_board.power_down()
 
-    def dummy(self):
+    def dummy(self, symbol):
         """This is a dummy-method"""
         return
 
