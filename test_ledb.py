@@ -1,6 +1,6 @@
 import RPi.GPIO as GPIO
 
-pins = [18, 23, 24]
+pins = [16, 20, 21]
 
 pin_led_states = [
   [1, 0, -1], # A
