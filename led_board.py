@@ -44,7 +44,7 @@ class LedBoard:
     def set_pin(self, pin_index, pin_state):
         """ set two pins to output and one to input
             to light the correct led """
-        print("pin_index:", pin_index, "pin_state:", pin_state)
+        print("i:", pin_index, "s:", pin_state)
         if pin_state == -1:
             gpio.setup(self.pins[pin_index], gpio.IN)
         else:
@@ -59,7 +59,7 @@ class LedBoard:
     def light_led(self, led_number, sec):
         """ turn on one LED by calling set_high,
             wait 'sec' seconds and turn it off """
-        print("\n       led_number:", led_number, "sec:", sec)
+        print("    nr:", led_number, "s:", sec)
         self.set_high(led_number)
         sleep(sec)
         # self.turn_off_led(led_number)
@@ -92,7 +92,7 @@ class LedBoard:
         """ turn all LEDs on and off in sequence
             for 'sec' seconds when password is verified """
         for key in range(len(self.pin_led_states) - 1):
-            print("     key:", key)
+            print("        key:", key)
             self.light_led(key, sec / 6)
 
     def power_up(self):
@@ -189,12 +189,12 @@ LB.setup()
 
 
 def test_leds():
-    LB.light_led(0, 2)
-    LB.light_led(1, 2)
-    LB.light_led(2, 2)
-    LB.light_led(3, 2)
-    LB.light_led(4, 2)
-    LB.light_led(5, 2)
+    LB.light_led(0, 0.5)
+    LB.light_led(1, 0.5)
+    LB.light_led(2, 0.5)
+    LB.light_led(3, 0.5)
+    LB.light_led(4, 0.5)
+    LB.light_led(5, 0.5)
 
 
 def test_twinkle():
