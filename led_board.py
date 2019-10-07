@@ -1,7 +1,6 @@
 """ module for LED-board """
-from time import sleep
+from time import sleep, time
 import RPi.GPIO as gpio
-# from gpiozero import LED
 
 """
 To declare a pin to input: GPIO.setup(pin, GPIO.IN)
@@ -64,7 +63,7 @@ class LedBoard:
         sleep(sec)
         # self.turn_off_led(led_number)
 
-    def turn_off_led(self, led_number):
+    def turn_off_leds(self):
         self.set_pin(0, -1)
         self.set_pin(1, -1)
         self.set_pin(2, -1)
@@ -72,23 +71,12 @@ class LedBoard:
     def flash_all_leds(self, sec):
         """ flash all LEDs on and off for
             'sec' seconds when password is wrong """
-        # time_flashed is the duration the LEDs have flashed
-        time_flashed = 0
-        # last_state remembers the last state of the LED (1 = high, 0 = low)
-        last_state = 0
-
-        while time_flashed < sec:
+        stop_time = time() + sec
+        while time() < stop_time:
             for key in range(len(self.pin_led_states) - 1):
-                if last_state == 0:
-                    self.set_pin(key, 1)
-                else:
-                    self.set_pin(key, 0)
-
-            if key == 5:
-                last_state = (last_state + 1) % 2
-
-            sleep(0.2)
-            time_flashed += 0.2
+                self.set_high(key)
+            self.turn_off_leds()
+            sleep(0.5)
 
     def twinkle_all_leds(self, sec):
         """ turn all LEDs on and off in sequence
