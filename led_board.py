@@ -61,7 +61,7 @@ class LedBoard:
         print(led_number, sec)
         self.set_high(led_number)
         sleep(sec)
-        self.turn_off_led(led_number)
+        # self.turn_off_led(led_number)
 
     def turn_off_led(self, led_number):
         self.set_pin(led_number, 0)
