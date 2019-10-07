@@ -25,6 +25,13 @@ class KPC:
         self.current_password_sequence = ''
         self.LED_board.power_up()
 
+    def reset_cps(self):
+        """To reset the password if it is typed wrong"""
+        self.current_password_sequence = ''
+
+    def reset_lid(self):
+        self.Lid = None
+
     def get_next_signal(self):
         """Returns the next signal"""
         if self.override_signal is not None:
@@ -37,19 +44,24 @@ class KPC:
         """To append a new digit to the current_password_sequence"""
         self.current_password_sequence += self.get_next_signal()
 
-    def change_lid(self):
-        """Change the Lid"""
+    def change_lid(self, new_lid):
+        """Change the Lid. The fsm will send inn the new_lid"""
+        self.current_new_lid = new_lid
+        self.current_new_ldur = ''
+        # ^When we change the Lid, we can also reset the Ldur
         if self.validate_lid():
             self.Lid = self.current_new_lid
 
-    def change_ldur(self):
+    def change_ldur(self, new_char):
         """Change Ldur"""
-        if self.validate_ldur():
-            self.Ldur = self.current_new_ldur
-
-    def reset_agent(self):
-        """To reset the password if it is typed wrong"""
-        self.current_password_sequence = ''
+        self.current_new_ldur += new_char
+        if self.current_new_ldur[-1] == '*':
+            # If the last signal in the string is a star, finish
+            self.current_new_ldur.replace('*', '')
+            if self.validate_ldur():
+                self.Ldur = self.current_new_ldur
+            else:
+                self.Ldur = 0
 
     def verify_login(self):
         """Checks if the password is correct, and acts from that"""
@@ -70,14 +82,15 @@ class KPC:
             f = open(self.path_name, "w")
             f.write(self.current_new_password)
             f.close()
-            # Kjør lys-show for akseptert passord !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            self.LED_board.ok_format()  # This method will light if the new password was ok
+            self.override_signal = 'Y'
         else:
-            # Kjør lys-show for feil passord !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            i = 1  # So it will stop complaining
+            self.LED_board.wrong_format()  # This method will light if the new password was wrong
+            self.override_signal = 'N'
 
     def validate_lid(self):
         """Checks if the chosen LED is a valid number"""
-        return 0 <= self.current_new_lid < 6
+        return 0 <= int(self.current_new_lid) < 6
 
     def validate_ldur(self):
         """Checks if the chosen Ldur is a valid """
@@ -108,3 +121,6 @@ def main():
     # so that it is constantly looking for a new signal
     while True:
         print(agent.get_next_signal())
+
+
+main()
