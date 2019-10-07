@@ -75,9 +75,9 @@ class LedBoard:
         while time() < stop_time:
             for key in range(len(self.pin_led_states) - 1):
                 self.set_high(key)
-                sleep(0.01)
+                sleep(0.1)
             self.turn_off_leds()
-            sleep(0.06)
+            sleep(0.5)
 
     def twinkle_all_leds(self, sec):
         """ turn all LEDs on and off in sequence
@@ -123,7 +123,7 @@ def test_flash():
 
 
 # test_leds()
-test_twinkle()
-# test_flash()
+#test_twinkle()
+test_flash()
 
 gpio.cleanup()
