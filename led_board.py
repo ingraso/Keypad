@@ -65,7 +65,9 @@ class LedBoard:
         # self.turn_off_led(led_number)
 
     def turn_off_led(self, led_number):
-        self.set_pin(led_number, 0)
+        self.set_pin(0, -1)
+        self.set_pin(1, -1)
+        self.set_pin(2, -1)
 
     def flash_all_leds(self, sec):
         """ flash all LEDs on and off for
@@ -197,7 +199,7 @@ LB.setup()
 
 
 def test_leds():
-#    LB.light_led(0, 2)
+    LB.light_led(0, 0.5)
     LB.light_led(1, 0.5)
     LB.light_led(2, 0.5)
     LB.light_led(3, 0.5)
