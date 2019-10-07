@@ -91,7 +91,7 @@ class LedBoard:
         stop_time = time() + 2  # 2 = sec
         while time() < stop_time:
             for k in range(3, 5):
-                self.light_led(k)
+                self.set_high(k)
                 sleep(0.05)
         self.turn_off_leds()
 
@@ -100,7 +100,7 @@ class LedBoard:
         stop_time = time() + 2  # 2 = sec
         while time() < stop_time:
             for k in range(0, 2):
-                self.light_led(k)
+                self.set_high(k)
                 sleep(0.05)
         self.turn_off_leds()
 
@@ -110,7 +110,7 @@ class LedBoard:
         stop_time = time() + 2 # 2 = sec
         while time() < stop_time:
             for k in range(3, 5):
-                self.light_led(k)
+                self.set_high(k)
                 sleep(0.05)
             self.turn_off_leds()
             sleep(0.1)
@@ -121,7 +121,7 @@ class LedBoard:
         stop_time = time() + 2  # 2 = sec
         while time() < stop_time:
             for k in range(0, 2):
-                self.light_led(k)
+                self.set_high(k)
                 sleep(0.05)
             self.turn_off_leds()
             sleep(0.1)
