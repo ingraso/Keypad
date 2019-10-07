@@ -124,7 +124,7 @@ def main():
     # A little bit confused, but somehow we must run the program
     # so that it is constantly looking for a new signal
     while True:
-        print(agent.get_next_signal())
+        print(agent.get_next_signal(0))
 
 
 main()
