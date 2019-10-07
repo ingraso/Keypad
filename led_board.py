@@ -184,12 +184,25 @@ class LedBoard:
         gpio.output(self.pins[1], gpio.LOW)
 
 
-def test_led():
-    LB = LedBoard()
-    LB.setup()
+LB = LedBoard()
+LB.setup()
+
+
+def test_leds():
     LB.light_led(0, 2)
+    LB.light_led(1, 2)
+    LB.light_led(2, 2)
+    LB.light_led(3, 2)
+    LB.light_led(4, 2)
+    LB.light_led(5, 2)
+
+
+def test_twinkle():
     LB.twinkle_all_leds(6)
+
+
+def test_flash():
     LB.flash_all_leds(6)
 
 
-test_led()
+test_leds()
