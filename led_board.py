@@ -24,7 +24,7 @@ class LedBoard:
             and 1 is output (respectively low and high)
         """
 
-        self.pins = [16, 20, 21]
+        self.pins = [16, 12, 21]
 
         self.pin_led_states = [
             [1, 0, -1],
@@ -73,16 +73,16 @@ class LedBoard:
             'sec' seconds when password is wrong """
         stop_time = time() + sec
         while time() < stop_time:
-            for key in range(len(self.pin_led_states) - 1):
+            for key in range(len(self.pin_led_states)):
                 self.set_high(key)
-                sleep(0.1)
+                sleep(0.01)
             self.turn_off_leds()
-            sleep(0.5)
+            sleep(0.06)
 
     def twinkle_all_leds(self, sec):
         """ turn all LEDs on and off in sequence
             for 'sec' seconds when password is verified """
-        for key in range(len(self.pin_led_states) - 1):
+        for key in range(len(self.pin_led_states)):
             # print("        key:", key)
             self.light_led(key, sec / 6)
 
@@ -123,7 +123,7 @@ def test_flash():
 
 
 # test_leds()
-#test_twinkle()
-test_flash()
+test_twinkle()
+# test_flash()
 
 gpio.cleanup()
