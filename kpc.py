@@ -13,8 +13,9 @@ class KPC:
         self.LED_board = lb.LedBoard()
         self.current_password_sequence = ''
         self.current_new_password = ''
+        self.current_new_lid = ''
+        self.current_new_ldur = ''
         self.path_name = 'SKRIV INN HELE HELE PATH-NAVNET TIL HVOR PASSORDET ER LAGRET HER'
-        # ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
         self.override_signal = None
         self.Lid = None
         self.Ldur = 0
@@ -27,12 +28,24 @@ class KPC:
     def get_next_signal(self):
         """Returns the next signal"""
         if self.override_signal is not None:
-            return self.override_signal
+            sending_signal = self.override_signal
+            self.override_signal = None
+            return sending_signal
         return self.keypad.get_next_signal()
 
     def append_next_password_digit(self):
         """To append a new digit to the current_password_sequence"""
         self.current_password_sequence += self.get_next_signal()
+
+    def change_lid(self):
+        """Change the Lid"""
+        if self.validate_lid():
+            self.Lid = self.current_new_lid
+
+    def change_ldur(self):
+        """Change Ldur"""
+        if self.validate_ldur():
+            self.Ldur = self.current_new_ldur
 
     def reset_agent(self):
         """To reset the password if it is typed wrong"""
@@ -62,6 +75,14 @@ class KPC:
             # Kjør lys-show for feil passord !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             i = 1  # So it will stop complaining
 
+    def validate_lid(self):
+        """Checks if the chosen LED is a valid number"""
+        return 0 <= self.current_new_lid < 6
+
+    def validate_ldur(self):
+        """Checks if the chosen Ldur is a valid """
+        return self.current_new_ldur.isdigit()
+
     def light_one_led(self):
         """To light one given LED for a given amount of time"""
         self.LED_board.light_led(self.Lid, self.Ldur)
@@ -77,3 +98,13 @@ class KPC:
     def exit_action(self):
         """Start the power_down light sequence"""
         self.LED_board.power_down()
+
+
+agent = KPC()
+
+
+def main():
+    # A little bit confused, but somehow we must run the program
+    # so that it is constantly looking for a new signal
+    while True:
+        print(agent.get_next_signal())
