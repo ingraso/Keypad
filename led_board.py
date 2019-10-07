@@ -44,6 +44,7 @@ class LedBoard:
     def set_pin(self, pin_index, pin_state):
         """ set two pins to output and one to input
             to light the correct led """
+        print("pin_index:", pin_index, "pin_state:", pin_state)
         if pin_state == -1:
             gpio.setup(self.pins[pin_index], gpio.IN)
         else:
@@ -58,7 +59,7 @@ class LedBoard:
     def light_led(self, led_number, sec):
         """ turn on one LED by calling set_high,
             wait 'sec' seconds and turn it off """
-        print(led_number, sec)
+        print("led_number:", led_number, "sec:", sec)
         self.set_high(led_number)
         sleep(sec)
         # self.turn_off_led(led_number)
