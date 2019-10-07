@@ -197,12 +197,12 @@ LB.setup()
 
 
 def test_leds():
-#    LB.light_led(0, 0.5)
+    LB.light_led(0, 0.5)
 #    LB.light_led(1, 0.5)
-    LB.light_led(2, 0.5)
-    LB.light_led(3, 0.5)
-    LB.light_led(4, 0.5)
-    LB.light_led(5, 0.5)
+#    LB.light_led(2, 0.5)
+#    LB.light_led(3, 0.5)
+#    LB.light_led(4, 0.5)
+#    LB.light_led(5, 0.5)
 
 
 def test_twinkle():
