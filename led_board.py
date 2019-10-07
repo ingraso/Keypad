@@ -90,7 +90,7 @@ class LedBoard:
         """ light show on power up """
         stop_time = time() + 2  # 2 = sec
         while time() < stop_time:
-            for k in range(3, 5):
+            for k in range(4, 6):
                 self.set_high(k)
                 sleep(0.05)
         self.turn_off_leds()
@@ -109,7 +109,7 @@ class LedBoard:
             password has been made """
         stop_time = time() + 2 # 2 = sec
         while time() < stop_time:
-            for k in range(3, 5):
+            for k in range(4, 6):
                 self.set_high(k)
                 sleep(0.05)
             self.turn_off_leds()
