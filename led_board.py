@@ -75,7 +75,7 @@ class LedBoard:
         last_state = 0
 
         while time_flashed < sec:
-            for key in range(len(self.pin_led_states)):
+            for key in range(len(self.pin_led_states) - 1):
                 if last_state == 0:
                     self.set_pin(key, 1)
                 else:
@@ -90,7 +90,7 @@ class LedBoard:
     def twinkle_all_leds(self, sec):
         """ turn all LEDs on and off in sequence
             for 'sec' seconds when password is verified """
-        for key in range(len(self.pin_led_states)):
+        for key in range(len(self.pin_led_states) - 1):
             self.light_led(key, sec / 6)
 
     def power_up(self):
