@@ -183,6 +183,14 @@ class LedBoard:
 
         gpio.output(self.pins[1], gpio.LOW)
 
+    def verify_new_password(self):
+        """ light green to verify that a new
+            password has been made """
+
+    def wrong_new_password(self):
+        """ light green to verify that a new
+            password has been made """
+
 
 LB = LedBoard()
 LB.setup()
@@ -191,11 +199,11 @@ LB.setup()
 def test_leds():
     # LB.light_led(0, 0.5)
     LB.light_led(1, 0.5)
-    LB.light_led(2, 0.5)
+"""    LB.light_led(2, 0.5)
     LB.light_led(3, 0.5)
     LB.light_led(4, 0.5)
     LB.light_led(5, 0.5)
-
+"""
 
 def test_twinkle():
     LB.twinkle_all_leds(6)
