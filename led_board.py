@@ -59,7 +59,7 @@ class LedBoard:
     def light_led(self, led_number, sec):
         """ turn on one LED by calling set_high,
             wait 'sec' seconds and turn it off """
-        print("led_number:", led_number, "sec:", sec)
+        print("\n       led_number:", led_number, "sec:", sec)
         self.set_high(led_number)
         sleep(sec)
         # self.turn_off_led(led_number)
@@ -92,6 +92,7 @@ class LedBoard:
         """ turn all LEDs on and off in sequence
             for 'sec' seconds when password is verified """
         for key in range(len(self.pin_led_states) - 1):
+            print("     key:", key)
             self.light_led(key, sec / 6)
 
     def power_up(self):
