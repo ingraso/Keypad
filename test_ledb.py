@@ -29,5 +29,5 @@ set_pin(1, -1)
 set_pin(2, -1)
 
 while True:
-    x = int(raw_input("Pin (0 to 5):"))
+    x = int(input("Pin (0 to 5):"))
     light_led(x)
