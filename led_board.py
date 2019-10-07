@@ -88,91 +88,9 @@ class LedBoard:
 
     def power_up(self):
         """ light show on power up """
-        gpio.output(self.pins[1], gpio.HIGH)
-        gpio.output(self.pins[3], gpio.HIGH)
-        gpio.output(self.pins[5], gpio.HIGH)
-        sleep(0.5)
-
-        gpio.output(self.pins[1], gpio.LOW)
-        gpio.output(self.pins[3], gpio.LOW)
-        gpio.output(self.pins[5], gpio.LOW)
-        gpio.output(self.pins[2], gpio.HIGH)
-        gpio.output(self.pins[4], gpio.HIGH)
-        gpio.output(self.pins[6], gpio.HIGH)
-        sleep(0.5)
-
-        gpio.output(self.pins[2], gpio.LOW)
-        gpio.output(self.pins[4], gpio.LOW)
-        gpio.output(self.pins[6], gpio.LOW)
-
-        gpio.output(self.pins[1], gpio.HIGH)
-        sleep(0.1)
-
-        gpio.output(self.pins[1], gpio.LOW)
-        gpio.output(self.pins[2], gpio.HIGH)
-        sleep(0.1)
-
-        gpio.output(self.pins[2], gpio.LOW)
-        gpio.output(self.pins[3], gpio.HIGH)
-        sleep(0.1)
-
-        gpio.output(self.pins[3], gpio.LOW)
-        gpio.output(self.pins[4], gpio.HIGH)
-        sleep(0.1)
-
-        gpio.output(self.pins[4], gpio.LOW)
-        gpio.output(self.pins[5], gpio.HIGH)
-        sleep(0.1)
-
-        gpio.output(self.pins[5], gpio.LOW)
-        gpio.output(self.pins[6], gpio.HIGH)
-        sleep(0.1)
-
-        gpio.output(self.pins[6], gpio.LOW)
 
     def power_down(self):
         """ light show on power down """
-        gpio.output(self.pins[2], gpio.HIGH)
-        gpio.output(self.pins[4], gpio.HIGH)
-        gpio.output(self.pins[6], gpio.HIGH)
-        sleep(0.5)
-
-        gpio.output(self.pins[2], gpio.LOW)
-        gpio.output(self.pins[4], gpio.LOW)
-        gpio.output(self.pins[6], gpio.LOW)
-        gpio.output(self.pins[1], gpio.HIGH)
-        gpio.output(self.pins[3], gpio.HIGH)
-        gpio.output(self.pins[5], gpio.HIGH)
-        sleep(0.5)
-
-        gpio.output(self.pins[1], gpio.LOW)
-        gpio.output(self.pins[3], gpio.LOW)
-        gpio.output(self.pins[5], gpio.LOW)
-
-        gpio.output(self.pins[6], gpio.HIGH)
-        sleep(0.1)
-
-        gpio.output(self.pins[6], gpio.LOW)
-        gpio.output(self.pins[5], gpio.HIGH)
-        sleep(0.1)
-
-        gpio.output(self.pins[5], gpio.LOW)
-        gpio.output(self.pins[4], gpio.HIGH)
-        sleep(0.1)
-
-        gpio.output(self.pins[4], gpio.LOW)
-        gpio.output(self.pins[3], gpio.HIGH)
-        sleep(0.1)
-
-        gpio.output(self.pins[3], gpio.LOW)
-        gpio.output(self.pins[2], gpio.HIGH)
-        sleep(0.1)
-
-        gpio.output(self.pins[2], gpio.LOW)
-        gpio.output(self.pins[1], gpio.HIGH)
-        sleep(0.1)
-
-        gpio.output(self.pins[1], gpio.LOW)
 
     def verify_new_password(self):
         """ light green to verify that a new
@@ -204,7 +122,7 @@ def test_flash():
     LB.flash_all_leds(6)
 
 
-#test_leds()
+# test_leds()
 test_twinkle()
 test_flash()
 
