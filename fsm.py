@@ -13,8 +13,8 @@ def signal_is_whatever(signal):
 
 
 # defines symbols
-ALL_SYMBOLS = signal_is_whatever()
-ALL_DIGITS = signal_is_digit()
+ALL_SYMBOLS = signal_is_whatever
+ALL_DIGITS = signal_is_digit
 STAR = "*"
 Y = "Y"
 HASHTAG = "#"
