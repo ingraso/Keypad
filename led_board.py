@@ -203,7 +203,7 @@ def test_flash():
     LB.flash_all_leds(6)
 
 
-test_leds()
+#test_leds()
 test_twinkle()
 test_flash()
 
