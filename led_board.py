@@ -186,6 +186,8 @@ def test_led():
     LB = LedBoard()
     LB.setup()
     LB.light_led(0, 2)
+    LB.twinkle_all_leds(6)
+    LB.flash_all_leds(6)
 
 
 test_led()
