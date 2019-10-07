@@ -1,7 +1,7 @@
 """ module for LED-board """
 from time import sleep
 import RPi.GPIO as gpio
-from gpiozero import LED
+# from gpiozero import LED
 
 """
 To declare a pin to input: GPIO.setup(pin, GPIO.IN)
@@ -16,31 +16,55 @@ class LedBoard:
     """ class for LED-board """
 
     def __init__(self):
-        """ initialize """
-        self.pins = {
-            1: LED(13),
-            2: LED(19),
-            3: LED(26),
-            4: LED(16),
-            5: LED(20),
-            6: LED(21)}
+        """ initialize LedBoard
+
+            pin_led_states has the key which is the
+            number of the LED,
+            and value is an array of values for input
+            and output pins. -1 is input pin, while 0
+            and 1 is output (respectively low and high)
+        """
+
+        self.pins = [16, 20, 21]
+
+        self.pin_led_states = [
+            [1, 0, -1],
+            [0, 1, -1],
+            [1, -1, 0],
+            [0, -1, 1],
+            [-1, 1, 0],
+            [-1, 0, 1]
+        ]
+        # run self.setup() here?
 
     def setup(self):
         """ set the proper mode """
         gpio.setmode(gpio.BCM)
 
-        # have to setup the input and output pins!!
-        #test branch
+    def set_pin(self, pin_index, pin_state):
+        """ set two pins to output and one to input
+            to light the correct led """
+        if pin_state == -1:
+            gpio.setup(self.pins[pin_index], gpio.IN)
+        else:
+            gpio.setup(self.pins[pin_index], gpio.OUT)
+            gpio.output(self.pins[pin_index], pin_state)
 
-    def light_led(self, led, sec):
-        """ turn on one LED by making the
-            appropriate combination of input
-            and output declarations """
+    def set_high(self, led_number):
+        """ lights the given led """
+        for pin_index, pin_state in enumerate(self.pin_led_states[led_number]):
+            self.set_pin(pin_index, pin_state)
 
-        # remember to find out how to get the value from the input/given key
-        gpio.output(self.pins[led], gpio.HIGH)
+    def light_led(self, led_number, sec):
+        """ turn on one LED by calling set_high,
+            wait 'sec' seconds and turn it off """
+        print(led_number, sec)
+        self.set_high(led_number)
         sleep(sec)
-        gpio.output(self.pins[led], gpio.LOW)
+        self.turn_off_led(led_number)
+
+    def turn_off_led(self, led_number):
+        self.set_pin(led_number, [0, 0, 0])
 
     def flash_all_leds(self, sec):
         """ flash all LEDs on and off for
@@ -51,13 +75,13 @@ class LedBoard:
         last_state = 0
 
         while time_flashed < sec:
-            for key in self.pins:
+            for key in range(len(self.pin_led_states)):
                 if last_state == 0:
-                    gpio.output(self.pins[key], gpio.HIGH)
+                    self.set_pin(key, [1, 1, 1])
                 else:
-                    gpio.output(self.pins[key], gpio.LOW)
+                    self.set_pin(key, [0, 0, 0])
 
-            if key == 6:
+            if key == 5:
                 last_state = (last_state + 1) % 2
 
             sleep(0.2)
@@ -66,10 +90,8 @@ class LedBoard:
     def twinkle_all_leds(self, sec):
         """ turn all LEDs on and off in sequence
             for 'sec' seconds when password is verified """
-        for key in self.pins:
-            gpio.output(self.pins[key], gpio.HIGH)
-            sleep(sec / 6)
-            gpio.output(self.pins[key], gpio.LOW)
+        for key in range(len(self.pin_led_states)):
+            self.light_led(key, sec / 6)
 
     def power_up(self):
         """ light show on power up """
@@ -158,3 +180,12 @@ class LedBoard:
         sleep(0.1)
 
         gpio.output(self.pins[1], gpio.LOW)
+
+
+def test_led():
+    LB = LedBoard()
+    LB.setup()
+    LB.light_led(0, 2)
+
+
+test_led()
