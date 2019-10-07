@@ -88,17 +88,43 @@ class LedBoard:
 
     def power_up(self):
         """ light show on power up """
+        stop_time = time() + 2  # 2 = sec
+        while time() < stop_time:
+            for k in range(3, 5):
+                self.light_led(k)
+                sleep(0.05)
+        self.turn_off_leds()
 
     def power_down(self):
         """ light show on power down """
+        stop_time = time() + 2  # 2 = sec
+        while time() < stop_time:
+            for k in range(0, 2):
+                self.light_led(k)
+                sleep(0.05)
+        self.turn_off_leds()
 
     def verify_new_password(self):
         """ light green to verify that a new
             password has been made """
+        stop_time = time() + 2 # 2 = sec
+        while time() < stop_time:
+            for k in range(3, 5):
+                self.light_led(k)
+                sleep(0.05)
+            self.turn_off_leds()
+            sleep(0.1)
 
     def wrong_new_password(self):
         """ light green to verify that a new
             password has been made """
+        stop_time = time() + 2  # 2 = sec
+        while time() < stop_time:
+            for k in range(0, 2):
+                self.light_led(k)
+                sleep(0.05)
+            self.turn_off_leds()
+            sleep(0.1)
 
 
 LB = LedBoard()
@@ -122,8 +148,13 @@ def test_flash():
     LB.flash_all_leds(6)
 
 
+LB.power_up()
+LB.power_down()
+LB.verify_new_password()
+LB.wrong_new_password()
+
 # test_leds()
 test_twinkle()
-test_flash()
+# test_flash()
 
 gpio.cleanup()
