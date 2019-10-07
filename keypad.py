@@ -50,7 +50,7 @@ class KeyPad:
                     if GPIO.input(col) == GPIO.HIGH:
                         i += 1
                     print("i er: ", i)
-                    print("Nå kommer sleep:")
+                    # print("Nå kommer sleep:")
                     sleep(0.01)
                 if i == 10:
                     tupple_answer = (row, col)
