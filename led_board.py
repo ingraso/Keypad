@@ -64,7 +64,7 @@ class LedBoard:
         self.turn_off_led(led_number)
 
     def turn_off_led(self, led_number):
-        self.set_pin(led_number, [0, 0, 0])
+        self.set_pin(led_number, 0)
 
     def flash_all_leds(self, sec):
         """ flash all LEDs on and off for
@@ -77,9 +77,9 @@ class LedBoard:
         while time_flashed < sec:
             for key in range(len(self.pin_led_states)):
                 if last_state == 0:
-                    self.set_pin(key, [1, 1, 1])
+                    self.set_pin(key, 1)
                 else:
-                    self.set_pin(key, [0, 0, 0])
+                    self.set_pin(key, 0)
 
             if key == 5:
                 last_state = (last_state + 1) % 2
