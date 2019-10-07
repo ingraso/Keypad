@@ -124,6 +124,6 @@ def test_flash():
 
 # test_leds()
 test_twinkle()
-test_flash()
+# test_flash()
 
 gpio.cleanup()
