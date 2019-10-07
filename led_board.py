@@ -214,3 +214,5 @@ def test_flash():
 
 
 test_leds()
+
+gpio.cleanup()
