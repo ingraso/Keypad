@@ -20,19 +20,19 @@ class KPC:
         self.Lid = None
         self.Ldur = 0
 
-    def init_passcode_entry(self):
+    def init_passcode_entry(self, symbol):
         """Makes the KPC ready to start"""
         self.current_password_sequence = ''
         self.LED_board.power_up()
 
-    def reset_cps(self):
+    def reset_cps(self, symbol):
         """To reset the password if it is typed wrong"""
         self.current_password_sequence = ''
 
-    def reset_lid(self):
+    def reset_lid(self, symbol):
         self.Lid = None
 
-    def get_next_signal(self):
+    def get_next_signal(self, symbol):
         """Returns the next signal"""
         if self.override_signal is not None:
             sending_signal = self.override_signal
@@ -40,7 +40,7 @@ class KPC:
             return sending_signal
         return self.keypad.get_next_signal()
 
-    def append_next_password_digit(self):
+    def append_next_password_digit(self, symbol):
         """To append a new digit to the current_password_sequence"""
         self.current_password_sequence += self.get_next_signal()
 
@@ -63,7 +63,7 @@ class KPC:
             else:
                 self.Ldur = 0
 
-    def verify_login(self):
+    def verify_login(self, symbol):
         """Checks if the password is correct, and acts from that"""
         f = open(self.path_name, "r")
         password = f.read()
@@ -75,7 +75,7 @@ class KPC:
             self.flash_leds()
         f.close()
 
-    def validate_passcode_change(self):
+    def validate_passcode_change(self, symbol):
         """Checks if the new password is legal, and acts on that"""
         if len(self.current_new_password) >= 4 and \
                 self.current_new_password.isdigit():
@@ -96,7 +96,7 @@ class KPC:
         """Checks if the chosen Ldur is a valid """
         return self.current_new_ldur.isdigit()
 
-    def light_one_led(self):
+    def light_one_led(self, symbol):
         """To light one given LED for a given amount of time"""
         self.LED_board.light_led(self.Lid, self.Ldur)
 
@@ -111,6 +111,10 @@ class KPC:
     def exit_action(self):
         """Start the power_down light sequence"""
         self.LED_board.power_down()
+
+    def dummy(self):
+        """This is a dummy-method"""
+        return
 
 
 agent = KPC()
