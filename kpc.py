@@ -10,14 +10,12 @@ class KPC:
     def __init__(self):
         """Initializing the KPC-object"""
         self.keypad = kp.KeyPad()
-        print("Keypad is initialized")
         self.LED_board = lb.LedBoard()
-        print("LED_board initialized")
         self.current_password_sequence = ''
         self.current_new_password = ''
         self.current_new_lid = ''
         self.current_new_ldur = ''
-        self.path_name = 'SKRIV INN HELE HELE PATH-NAVNET TIL HVOR PASSORDET ER LAGRET HER'
+        self.path_name = 'password.txt'
         self.override_signal = None
         self.Lid = None
         self.Ldur = 0
@@ -136,4 +134,4 @@ def main():
     print(agent.get_next_signal(0))
 
 
-main()
+# main()
