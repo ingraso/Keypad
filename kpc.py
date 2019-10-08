@@ -34,7 +34,7 @@ class KPC:
     def reset_lid(self, symbol):
         self.Lid = None
 
-    def get_next_signal(self, symbol):
+    def get_next_signal(self):
         """Returns the next signal"""
         #print("Now were in kpc.get_next_signal")
         if self.override_signal is not None:
@@ -45,7 +45,7 @@ class KPC:
 
     def append_next_password_digit(self, symbol):
         """To append a new digit to the current_password_sequence"""
-        self.current_password_sequence += self.get_next_signal()
+        self.current_password_sequence += symbol
 
     def change_lid(self, new_lid):
         """Change the Lid. The fsm will send inn the new_lid"""
@@ -80,38 +80,45 @@ class KPC:
 
     def validate_passcode_change(self, symbol):
         """Checks if the new password is legal, and acts on that"""
+        self.current_new_password = self.current_password_sequence
         if len(self.current_new_password) >= 4 and \
                 self.current_new_password.isdigit():
             f = open(self.path_name, "w")
             f.write(self.current_new_password)
             f.close()
-            self.LED_board.ok_format()  # This method will light if the new password was ok
             self.override_signal = 'Y'
         else:
-            self.LED_board.wrong_format()  # This method will light if the new password was wrong
             self.override_signal = 'N'
 
-    def validate_lid(self):
+    def validate_lid(self, symbol):
         """Checks if the chosen LED is a valid number"""
         return 0 <= int(self.current_new_lid) < 6
 
-    def validate_ldur(self):
+    def validate_ldur(self, symbol):
         """Checks if the chosen Ldur is a valid """
         return self.current_new_ldur.isdigit()
+
+    def ok_format(self, symbol):
+        """Will be called if the new password is accepted"""
+        self.LED_board.verify_new_password()
+
+    def wrong_format(self, symbol):
+        """Will be called if the new password is wrong"""
+        self.LED_board.wrong_new_password()
 
     def light_one_led(self, symbol):
         """To light one given LED for a given amount of time"""
         self.LED_board.light_led(self.Lid, self.Ldur)
 
-    def flash_leds(self):
+    def flash_leds(self, symbol):
         """Ask to flash all the LEDs"""
         self.LED_board.flash_all_leds(0.5)
 
-    def twinkle_leds(self):
+    def twinkle_leds(self, symbol):
         """Ask to twinkle all LEDs"""
         self.LED_board.twinkle_all_leds(0.3)
 
-    def exit_action(self):
+    def exit_action(self, symbol):
         """Start the power_down light sequence"""
         self.LED_board.power_down()
 
