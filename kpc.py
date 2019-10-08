@@ -1,7 +1,7 @@
 """This module will contain the KPC agent and its methods"""
 import keypad as kp
 import led_board as lb
-from fsm import *
+import fsm as f
 
 
 class KPC:
@@ -18,8 +18,8 @@ class KPC:
         self.current_new_ldur = ''
         self.path_name = 'password.txt'
         self.override_signal = None
-        self.Lid = None
-        self.Ldur = 0
+        self.lid = None
+        self.ldur = 0
 
     def init_passcode_entry(self, symbol):
         """Makes the KPC ready to start"""
@@ -31,7 +31,8 @@ class KPC:
         self.current_password_sequence = ''
 
     def reset_lid(self, symbol):
-        self.Lid = None
+        """To reset the lid to None"""
+        self.lid = None
 
     def get_next_signal(self):
         """Returns the next signal"""
@@ -55,7 +56,7 @@ class KPC:
         self.current_new_ldur = ''
         # ^When we change the Lid, we can also reset the Ldur
         if self.validate_lid():
-            self.Lid = self.current_new_lid
+            self.lid = self.current_new_lid
 
     def change_ldur(self, new_char):
         """Change Ldur"""
@@ -64,22 +65,22 @@ class KPC:
             # If the last signal in the string is a star, finish
             self.current_new_ldur.replace('*', '')
             if self.validate_ldur():
-                self.Ldur = self.current_new_ldur
+                self.ldur = self.current_new_ldur
                 self.light_one_led()
             else:
-                self.Ldur = 0
+                self.ldur = 0
 
     def verify_login(self, symbol):
         """Checks if the password is correct, and acts from that"""
-        f = open(self.path_name, "r")
-        password = f.read()
+        file = open(self.path_name, "r")
+        password = file.read()
         if password == self.current_password_sequence:
             self.override_signal = 'Y'
             self.twinkle_leds()
         else:
             self.override_signal = 'N'
             self.flash_leds()
-        f.close()
+        file.close()
 
     def validate_passcode_change(self, symbol):
         """Checks if the new password is legal, and acts on that"""
@@ -111,7 +112,7 @@ class KPC:
 
     def light_one_led(self):
         """To light one given LED for a given amount of time"""
-        self.LED_board.light_led(self.Lid, self.Ldur)
+        self.LED_board.light_led(self.lid, self.ldur)
 
     def flash_leds(self):
         """Ask to flash all the LEDs"""
@@ -130,12 +131,13 @@ class KPC:
         return
 
 
-
 def main():
+    """Method to run program"""
     # A little bit confused, but somehow we must run the program
     # so that it is constantly looking for a new signal
     agent = KPC()
-    fsm = FSM(agent)
+    fsm = f.FSM(agent)
     fsm.main_loop()
+
 
 main()
