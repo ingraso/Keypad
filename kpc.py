@@ -35,12 +35,15 @@ class KPC:
 
     def get_next_signal(self):
         """Returns the next signal"""
-        #print("Now were in kpc.get_next_signal")
+        # print("Now we're in kpc.get_next_signal")
         if self.override_signal is not None:
             sending_signal = self.override_signal
             self.override_signal = None
+            print("Override signal er", sending_signal)
             return sending_signal
-        return self.keypad.get_next_signal()
+        next_signal = self.keypad.get_next_signal()
+        print("next signal er", next_signal)
+        return next_signal
 
     def append_next_password_digit(self, symbol):
         """To append a new digit to the current_password_sequence"""

@@ -51,7 +51,7 @@ class KeyPad:
                     sleep(0.01)
                 if i == 10:
                     tupple_answer = (row, col)
-                    print("i ble 10 og tuppelen er:", tupple_answer)
+                    # print("i ble 10 og tuppelen er:", tupple_answer)
                     return self.signs[tupple_answer]
             GPIO.output(row, GPIO.LOW)
         return None
