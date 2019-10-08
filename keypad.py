@@ -62,4 +62,5 @@ class KeyPad:
         next_signal = self.do_polling()
         while next_signal is None:
             next_signal = self.do_polling()
+            sleep(0.5)
         return next_signal
