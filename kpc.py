@@ -1,6 +1,7 @@
 """This module will contain the KPC agent and its methods"""
 import keypad as kp
 import led_board as lb
+from fsm import *
 
 
 class KPC:
