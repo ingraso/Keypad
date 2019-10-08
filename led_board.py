@@ -61,7 +61,7 @@ class LedBoard:
         # print("    nr:", led_number, "s:", sec)
         self.set_high(led_number)
         sleep(sec)
-        self.turn_off_led()
+        self.turn_off_leds()
 
     def turn_off_leds(self):
         """ turn off all leds manually, by setting
