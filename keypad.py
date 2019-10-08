@@ -59,7 +59,7 @@ class KeyPad:
     def get_next_signal(self):
         """The interface between the agent and the keypad.
         Calls do_polling until a key press is detected."""
-        next_signal = self.do_polling()
+        next_signal = None
         while next_signal is None:
             next_signal = self.do_polling()
             sleep(0.5)
