@@ -11,10 +11,15 @@ def signal_is_whatever(signal):
     """Return True no matter what signal."""
     return True
 
+def signal_from_zero_to_five(signal):
+    """Return if signal is digit 0-9."""
+    return 48 <= ord(signal) <= 53
+
 
 # defines symbols
 ALL_SYMBOLS = signal_is_whatever
 ALL_DIGITS = signal_is_digit
+ZERO_TO_FIVE  = signal_from_zero_to_five
 STAR = "*"
 Y = "Y"
 HASHTAG = "#"
@@ -25,7 +30,7 @@ class FSM(object):
 
     def __init__(self, agent):
         # creates all rule objects for the FSM
-        self.r_1 = Rule("init", ALL_SYMBOLS, "read", agent.reset_cps)
+        self.r_1 = Rule("init", ALL_SYMBOLS, "read", agent.init_passcode_entry)
         self.r_2 = Rule("read", STAR, "verify", agent.verify_login)
         self.r_3 = Rule("read", ALL_SYMBOLS, "read", agent.append_next_password_digit)
         self.r_4 = Rule("verify", Y, "active", agent.dummy)
@@ -33,20 +38,21 @@ class FSM(object):
         self.r_6 = Rule("active", STAR, "read2", agent.reset_cps)
         self.r_7 = Rule("led", STAR, "time", agent.dummy)
         self.r_8 = Rule("led", HASHTAG, "logout", agent.dummy)
-        self.r_9 = Rule("led", ALL_SYMBOLS, "active", agent.reset_led)
+        self.r_9 = Rule("led", ALL_SYMBOLS, "active", agent.reset_lid)
         self.r10 = Rule("time", HASHTAG, "logout", agent.dummy)
         self.r11 = Rule("time", ALL_DIGITS, "time", agent.change_ldur)
         self.r12 = Rule("time", STAR, "active", agent.change_ldur)
+        self.r20 = Rule("active", HASHTAG, "logout", agent.dummy)
         self.r13 = Rule("active", ALL_SYMBOLS, "active", agent.dummy)
         self.r14 = Rule("read2", HASHTAG, "logout", agent.dummy)
         self.r15 = Rule("read2", ALL_DIGITS, "read2", agent.append_next_password_digit)
-        self.r16 = Rule("read2", STAR, "verify2", agent.validate_password_change)
+        self.r16 = Rule("read2", STAR, "verify2", agent.validate_passcode_change)
         self.r17 = Rule("verify2", HASHTAG, "logout", agent.dummy)
         self.r18 = Rule("verify2", Y, "active", agent.ok_format)
         self.r19 = Rule("verify2", ALL_SYMBOLS, "active", agent.wrong_format)
-        self.r20 = Rule("active", HASHTAG, "logout", agent.dummy)
         self.r21 = Rule("logout", HASHTAG, "done", agent.exit_action)
         self.r22 = Rule("logout", ALL_SYMBOLS, "active", agent.dummy)
+        self.r23 = Rule("active", ZERO_TO_FIVE, "led", agent.change_lid)
 
         self.rules = [
             self.r_1,
@@ -61,6 +67,8 @@ class FSM(object):
             self.r10,
             self.r11,
             self.r12,
+            self.r20,
+            self.r23,
             self.r13,
             self.r14,
             self.r15,
@@ -68,7 +76,6 @@ class FSM(object):
             self.r17,
             self.r18,
             self.r19,
-            self.r20,
             self.r21,
             self.r22]
 
@@ -83,18 +90,24 @@ class FSM(object):
 
     def get_next_signal(self):
         """Query the agent for the next signal."""
+        #print("----get_next_signal")
+        print("\nCurrent state:", self.current_state)
         self.current_signal = self.agent.get_next_signal()
 
     def run_rules(self):
         """Go through the rule set, in order, applying each rule until one of the rules is fired."""
+        #print("----run_rules")
         for rule in self.rules:
             is_fired = self.apply_rule(rule)
             if is_fired:
+                #print("----is_fired is True")
+                #print("----rule fired:", rule)
                 return
 
     def apply_rule(self, rule):
         """Check whether the conditions of a rule are met and fire rule if they are."""
         if rule.match(self.current_state, self.current_signal):
+            #print("Inside apply_rule:\n----self.current_state=", self.current_state, "\n----self.current_signal=", self.current_signal)
             self.fire_rule(rule)
             return True
         return False
@@ -102,13 +115,15 @@ class FSM(object):
     def fire_rule(self, rule):
         """Use the consequent of a rule to set the next state of the FSM and
         call the appropriate agent action."""
+        #print("*INSIDE FIRE_RULE*")
         self.current_state = rule.state2
-        self.agent.do_action(rule.action, self.current_signal)
+        #self.agent.do_action(rule.action, self.current_signal)
         rule.action(self.current_signal)
 
     def main_loop(self):
         """Begin in the FSM's default state and then repeatedly call get_next_signal
         and run_rules until the FSM        enters its default final state """
+        #print("*************NEW ROUND IN MAIN_LOOP********************")
         while self.current_state != "done":
             self.get_next_signal()
             self.run_rules()
@@ -135,6 +150,9 @@ class Rule(object):
 
     def match(self, current_state, current_signal):
         """Return whether the rule applies."""
+        #print("    ----Inside match in Rule")
+        #print("    ----current_sate=", current_state, "self.state1=",self.state1)
+        #print("    ----isfunction(self.signal)=", isfunction(self.signal), "\n________________________________")
         if current_state != self.state1:
             return False
 
