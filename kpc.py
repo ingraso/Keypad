@@ -61,6 +61,7 @@ class KPC:
             self.current_new_ldur.replace('*', '')
             if self.validate_ldur():
                 self.Ldur = self.current_new_ldur
+                self.light_one_led()
             else:
                 self.Ldur = 0
 
@@ -88,11 +89,11 @@ class KPC:
         else:
             self.override_signal = 'N'
 
-    def validate_lid(self, symbol):
+    def validate_lid(self):
         """Checks if the chosen LED is a valid number"""
         return 0 <= int(self.current_new_lid) < 6
 
-    def validate_ldur(self, symbol):
+    def validate_ldur(self):
         """Checks if the chosen Ldur is a valid """
         return self.current_new_ldur.isdigit()
 
@@ -104,15 +105,15 @@ class KPC:
         """Will be called if the new password is wrong"""
         self.LED_board.wrong_new_password()
 
-    def light_one_led(self, symbol):
+    def light_one_led(self):
         """To light one given LED for a given amount of time"""
         self.LED_board.light_led(self.Lid, self.Ldur)
 
-    def flash_leds(self, symbol):
+    def flash_leds(self):
         """Ask to flash all the LEDs"""
         self.LED_board.flash_all_leds(0.5)
 
-    def twinkle_leds(self, symbol):
+    def twinkle_leds(self):
         """Ask to twinkle all LEDs"""
         self.LED_board.twinkle_all_leds(0.3)
 
@@ -125,13 +126,12 @@ class KPC:
         return
 
 
-agent = KPC()
-
 
 def main():
     # A little bit confused, but somehow we must run the program
     # so that it is constantly looking for a new signal
-    print(agent.get_next_signal(0))
+    agent = KPC()
+    fsm = FSM(agent)
+    fsm.main_loop()
 
-
-# main()
+main()

@@ -6,6 +6,7 @@ import RPi.GPIO as GPIO
 def setup():
     """This method will set the proper mode via GPIO.setmode(GPIO.BCM).
     It will also set the row-pins as output and the column-pins as input."""
+    GPIO.setwarnings(False)
     GPIO.setmode(GPIO.BCM)
     GPIO.setup(18, GPIO.OUT)
     print("now we have set pin 18 to OUT")
