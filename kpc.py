@@ -115,11 +115,11 @@ class KPC:
 
     def flash_leds(self):
         """Ask to flash all the LEDs"""
-        self.LED_board.flash_all_leds(0.5)
+        self.LED_board.flash_all_leds(2)
 
     def twinkle_leds(self):
         """Ask to twinkle all LEDs"""
-        self.LED_board.twinkle_all_leds(0.3)
+        self.LED_board.twinkle_all_leds(2)
 
     def exit_action(self, symbol):
         """Start the power_down light sequence"""
