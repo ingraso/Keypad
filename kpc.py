@@ -55,7 +55,7 @@ class KPC:
         self.current_new_ldur = ''
         # ^When we change the Lid, we can also reset the Ldur
         if self.validate_lid():
-            self.lid = self.current_new_lid
+            self.lid = int(self.current_new_lid)
 
     def change_ldur(self, new_char):
         """Change Ldur"""
@@ -64,7 +64,7 @@ class KPC:
             # If the last signal in the string is a star, finish
             self.current_new_ldur.replace('*', '')
             if self.validate_ldur():
-                self.ldur = self.current_new_ldur
+                self.ldur = int(self.current_new_ldur)
                 self.light_one_led()
             else:
                 self.ldur = 0

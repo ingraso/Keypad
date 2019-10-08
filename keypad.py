@@ -48,7 +48,7 @@ class KeyPad:
                 for j in range(0, 10):
                     if GPIO.input(col) == GPIO.HIGH:
                         i += 1
-                    sleep(0.05)
+                    sleep(0.01)
                 if i == 10:
                     tupple_answer = (row, col)
                     GPIO.output(row, GPIO.LOW)
