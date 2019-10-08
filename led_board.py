@@ -129,14 +129,16 @@ class LedBoard:
             sleep(0.2)
 
 
-"""
+
 LB = LedBoard()
 LB.setup()
 LB.power_up()
 LB.power_down()
 LB.verify_new_password()
 LB.wrong_new_password()
-
+LB.flash_all_leds()
+LB.twinkle_all_leds()
+"""
 def test_leds():
     LB.light_led(0, 0.5)
     LB.light_led(1, 0.5)
