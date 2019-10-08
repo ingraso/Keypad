@@ -92,7 +92,7 @@ class LedBoard:
         while time() < stop_time:
             for k in range(4, 6):
                 self.set_high(k)
-                sleep(0.05)
+                sleep(0.01)
         self.turn_off_leds()
 
     def power_down(self):
@@ -101,7 +101,7 @@ class LedBoard:
         while time() < stop_time:
             for k in range(0, 2):
                 self.set_high(k)
-                sleep(0.05)
+                sleep(0.01)
         self.turn_off_leds()
 
     def verify_new_password(self):
@@ -111,9 +111,9 @@ class LedBoard:
         while time() < stop_time:
             for k in range(4, 6):
                 self.set_high(k)
-                sleep(0.05)
+                sleep(0.1)
             self.turn_off_leds()
-            sleep(0.1)
+            sleep(0.2)
 
     def wrong_new_password(self):
         """ light green to verify that a new
@@ -122,9 +122,9 @@ class LedBoard:
         while time() < stop_time:
             for k in range(0, 2):
                 self.set_high(k)
-                sleep(0.05)
+                sleep(0.1)
             self.turn_off_leds()
-            sleep(0.1)
+            sleep(0.2)
 
 
 LB = LedBoard()
@@ -148,10 +148,10 @@ def test_flash():
     LB.flash_all_leds(6)
 
 
-LB.power_up()
-LB.power_down()
-LB.verify_new_password()
-LB.wrong_new_password()
+# LB.power_up()
+# LB.power_down()
+# LB.verify_new_password()
+# LB.wrong_new_password()
 
 # test_leds()
 test_twinkle()
