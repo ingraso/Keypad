@@ -80,6 +80,7 @@ class LedBoard:
                 sleep(0.01)
             self.turn_off_leds()
             sleep(0.06)
+        self.turn_off_leds()
 
     def twinkle_all_leds(self, sec):
         """ turn all LEDs on and off in sequence
@@ -87,6 +88,7 @@ class LedBoard:
         for key in range(len(self.pin_led_states)):
             # print("        key:", key)
             self.light_led(key, sec / 6)
+        self.turn_off_leds()
 
     def power_up(self):
         """ light show on power up """
