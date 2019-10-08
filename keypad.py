@@ -36,7 +36,7 @@ class KeyPad:
         We will check if a key is pressed 10 times with 10ms sleep-time."""
         row_pins = [18, 23, 24, 25]
         col_pins = [17, 27, 22]
-        print("Nå er vi i do_polling")
+        #print("Nå er vi i do_polling")
 
         for row in row_pins:
             # Set the current row_pin HIGH
@@ -47,12 +47,12 @@ class KeyPad:
                 # tupple that will also be stored in a dict
                 # print("the col is: ", col)
                 i = 0
-                print("col", col, "er", GPIO.input(col))
-                print("GPIO.HIGH gir", GPIO.HIGH)
+                #print("col", col, "er", GPIO.input(col))
+                #print("GPIO.HIGH gir", GPIO.HIGH)
                 for j in range(0, 10):
                     if GPIO.input(col) == GPIO.HIGH:
                         i += 1
-                        print("Nå økes i med 1")
+                        #print("Nå økes i med 1")
                     # print("i er: ", i)
                     # print("Nå kommer sleep:")
                     sleep(0.01)
@@ -66,7 +66,7 @@ class KeyPad:
     def get_next_signal(self):
         """The interface between the agent and the keypad.
         Calls do_polling until a key press is detected."""
-        print("now we are in keypad.get_next_signal")
+       # print("now we are in keypad.get_next_signal")
         next_signal = self.do_polling()
         while next_signal is None:
             next_signal = self.do_polling()

@@ -36,7 +36,7 @@ class KPC:
 
     def get_next_signal(self, symbol):
         """Returns the next signal"""
-        print("Now were in kpc.get_next_signal")
+        #print("Now were in kpc.get_next_signal")
         if self.override_signal is not None:
             sending_signal = self.override_signal
             self.override_signal = None
@@ -126,8 +126,7 @@ agent = KPC()
 def main():
     # A little bit confused, but somehow we must run the program
     # so that it is constantly looking for a new signal
-    while True:
-        print(agent.get_next_signal(0))
+    print(agent.get_next_signal(0))
 
 
 main()
