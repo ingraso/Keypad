@@ -59,15 +59,21 @@ class KPC:
 
     def change_ldur(self, new_char):
         """Change Ldur"""
+        print("Nå er vi i change l_dur")
         self.current_new_ldur += new_char
         if self.current_new_ldur[-1] == '*':
+            print("Nå er vi i if self.current_new_ldur[-1] == *")
             # If the last signal in the string is a star, finish
             self.current_new_ldur.replace('*', '')
             if self.validate_ldur():
+                print("Vi er i if self.validate_ldur")
                 self.ldur = int(self.current_new_ldur)
                 self.light_one_led()
             else:
+                print("Vi kom ikke inn i innerste if")
                 self.ldur = 0
+        else:
+            print("Vi kom ikke inn i første if")
 
     def verify_login(self, symbol):
         """Checks if the password is correct, and acts from that"""
