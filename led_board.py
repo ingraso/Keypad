@@ -34,7 +34,7 @@ class LedBoard:
             [1, -1, 0],
             [0, -1, 1]
         ]
-        # run self.setup() here?
+        self.setup()
 
     def setup(self):
         """ set the proper mode """
@@ -64,6 +64,8 @@ class LedBoard:
         # self.turn_off_led(led_number)
 
     def turn_off_leds(self):
+        """ turn off all leds manually, by setting
+            the pin to -1 (input) """
         self.set_pin(0, -1)
         self.set_pin(1, -1)
         self.set_pin(2, -1)
@@ -107,7 +109,7 @@ class LedBoard:
     def verify_new_password(self):
         """ light green to verify that a new
             password has been made """
-        stop_time = time() + 2 # 2 = sec
+        stop_time = time() + 2  # 2 = sec
         while time() < stop_time:
             for k in range(4, 6):
                 self.set_high(k)
@@ -127,9 +129,13 @@ class LedBoard:
             sleep(0.2)
 
 
+"""
 LB = LedBoard()
 LB.setup()
-
+LB.power_up()
+LB.power_down()
+LB.verify_new_password()
+LB.wrong_new_password()
 
 def test_leds():
     LB.light_led(0, 0.5)
@@ -147,14 +153,8 @@ def test_twinkle():
 def test_flash():
     LB.flash_all_leds(6)
 
-
-# LB.power_up()
-# LB.power_down()
-# LB.verify_new_password()
-# LB.wrong_new_password()
-
-# test_leds()
-# test_twinkle()
-# test_flash()
-
+test_leds()
+test_twinkle()
+test_flash()
+"""
 gpio.cleanup()
