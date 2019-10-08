@@ -128,33 +128,4 @@ class LedBoard:
             self.turn_off_leds()
             sleep(0.2)
 
-
-"""
-LB = LedBoard()
-LB.setup()
-LB.power_up()
-LB.power_down()
-LB.verify_new_password()
-LB.wrong_new_password()
-
-def test_leds():
-    LB.light_led(0, 0.5)
-    LB.light_led(1, 0.5)
-    LB.light_led(2, 0.5)
-    LB.light_led(3, 0.5)
-    LB.light_led(4, 0.5)
-    LB.light_led(5, 0.5)
-
-
-def test_twinkle():
-    LB.twinkle_all_leds(6)
-
-
-def test_flash():
-    LB.flash_all_leds(6)
-
-test_leds()
-test_twinkle()
-test_flash()
-"""
 gpio.cleanup()
