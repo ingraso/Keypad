@@ -36,7 +36,6 @@ class KPC:
 
     def get_next_signal(self):
         """Returns the next signal"""
-        # print("Now we're in kpc.get_next_signal")
         if self.override_signal is not None:
             sending_signal = self.override_signal
             self.override_signal = None
