@@ -47,6 +47,8 @@ class KeyPad:
                 # tupple that will also be stored in a dict
                 # print("the col is: ", col)
                 i = 0
+                print("col", col, "er", GPIO.input(col))
+                print("GPIO.HIGH gir", GPIO.HIGH)
                 for j in range(0, 10):
                     if GPIO.input(col) == GPIO.HIGH:
                         i += 1
