@@ -154,7 +154,7 @@ def test_flash():
 # LB.wrong_new_password()
 
 # test_leds()
-test_twinkle()
+# test_twinkle()
 # test_flash()
 
 gpio.cleanup()
